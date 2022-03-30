@@ -1,0 +1,1 @@
+# skupper-sample-helm-operator
