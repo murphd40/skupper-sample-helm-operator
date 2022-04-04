@@ -1,0 +1,97 @@
+# Default values for skuppersample.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+skupperSiteController:
+  enabled: true
+  image:
+    tag: "0.8.6"
+    repository: "quay.io/skupper/site-controller"
+    pullPolicy: IfNotPresent
+
+skupperSite:
+  enabled: true
+  # https://github.com/skupperproject/skupper/blob/master/cmd/site-controller/README.md
+  config:
+    name: ""
+    cluster-local: false
+    console: "true"
+    # 'openshift', 'internal', 'unsecured'
+    console-authentication: internal
+    console-user: ""
+    console-password: ""
+    console-ingress: ""
+    create-network-policy: "false"
+    edge: "false"
+    # 'route', 'loadbalancer', 'nodeport', 'nginx-ingress-v1', 'contour-http-proxy', 'ingress', 'none'
+    ingress: ""
+    ingress-annotations: ""
+    ingress-host: ""
+    routers: ""
+    router-console: "false"
+    router-debug-mode: "false"
+    router-logging: info
+    # 'interior', 'edge'
+    router-mode: interior
+    router-cpu: ""
+    router-memory: ""
+    router-cpu-limit: ""
+    router-memory-limit: ""
+    router-pod-affinity: ""
+    router-pod-antiaffinity: ""
+    router-node-selector: ""
+    xp-router-max-frame-size: ""
+    xp-router-max-session-frames: ""
+    router-ingress-host: ""
+    router-service-annotations: ""
+    router-load-balancer-ip: ""
+    service-controller: "true"
+    service-sync: "true"
+    controller-cpu: ""
+    controller-memory: ""
+    controller-cpu-limit: ""
+    controller-memory-limit: ""
+    controller-pod-affinity: ""
+    controller-pod-antiaffinity: ""
+    controller-node-selector: ""
+    controller-ingress-host: ""
+    controller-service-annotations: ""
+    controller-load-balancer-ip: ""
+
+frontend:
+  skupper:
+    expose: false
+    port: 8080
+    proxy: http
+    address: ""
+  enabled: false
+  replicaCount: 1
+  image:
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: latest
+    repository: quay.io/skupper/hello-world-frontend
+  imagePullSecrets: []
+  resource: {}
+  backendServiceHost: "hello-world-backend"
+  backendServicePort: 8080
+
+backend:
+  skupper:
+    expose: false
+    # https://github.com/skupperproject/skupper/blob/master/api/types/types.go#L137-L140
+    port: 8080
+    proxy: http
+    address: ""
+  enabled: false
+  replicaCount: 1
+  image:
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: latest
+    repository: quay.io/skupper/hello-world-backend
+  imagePullSecrets: []
+  resource: {}

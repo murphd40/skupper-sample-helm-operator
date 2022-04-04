@@ -1,0 +1,21 @@
+apiVersion: skuppersample.example.com/v1alpha1
+kind: SkupperSample
+metadata:
+  name: skuppersample-sample
+spec:
+  fullnameOverride: ""
+  nameOverride: "east"
+  skupperSiteController:
+    enabled: true
+  skupperSite:
+    enabled: true
+    config:
+      edge: true
+      ingress: none
+  frontend:
+    enabled: false
+  backend:
+    enabled: true
+    skupper:
+      expose: true
+      # address: ""

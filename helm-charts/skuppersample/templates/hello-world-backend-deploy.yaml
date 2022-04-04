@@ -1,0 +1,38 @@
+{{- if .Values.backend.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    {{- with .Values.backend.skupper }}
+    {{- if .expose }}
+    {{- include "skuppersample.skupperExpose" . | nindent 4}}
+    {{- end }}
+    {{- end }}
+  name: {{ include "skuppersample.fullname" . }}-hello-world-backend
+  labels:
+    {{- include "skuppersample.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.backend.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "skuppersample.selectorLabels" . | nindent 6 }}
+      component: hello-world-backend
+  template:
+    metadata:
+      {{- with .Values.backend.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "skuppersample.selectorLabels" . | nindent 8 }}
+        component: hello-world-backend
+    spec:
+      containers:
+      - name: hello-world-backend
+        resources:
+          {{- toYaml .Values.backend.resources | nindent 12 }}
+        securityContext:
+          {{- toYaml .Values.backend.securityContext | nindent 12 }}
+        image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
+        imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
+{{- end }}

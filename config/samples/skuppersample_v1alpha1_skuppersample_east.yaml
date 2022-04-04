@@ -1,0 +1,24 @@
+apiVersion: skuppersample.example.com/v1alpha1
+kind: SkupperSample
+metadata:
+  name: skuppersample-sample
+spec:
+  fullnameOverride: ""
+  nameOverride: "east"
+  deploymentType: backend
+  frontend:
+    image:
+      pullPolicy: IfNotPresent
+      repository: quay.io/skupper/hello-world-frontend
+      tag: latest
+    imagePullSecrets: []
+    replicaCount: 1
+    resources: {}
+  backend:
+    image:
+      pullPolicy: IfNotPresent
+      repository: quay.io/skupper/hello-world-backend
+      tag: latest
+    imagePullSecrets: []
+    replicaCount: 1
+    resources: {}

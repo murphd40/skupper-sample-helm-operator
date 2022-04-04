@@ -1,0 +1,20 @@
+{{- if eq .Values.deploymentType "backend" -}}
+apiVersion: v1
+data:
+  cluster-local: "false"
+  console: "true"
+  console-authentication: internal
+  console-password: "rubble"
+  console-user: "barney"
+  edge: "true"
+  ingress: "none"
+  name: east-site
+  router-console: "true"
+  service-controller: "true"
+  service-sync: "true"
+kind: ConfigMap
+metadata:
+  name: skupper-site
+  labels:
+    {{- include "skuppersample.labels" . | nindent 4 }}
+{{- end }}

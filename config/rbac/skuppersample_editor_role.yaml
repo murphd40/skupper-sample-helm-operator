@@ -1,0 +1,24 @@
+# permissions for end users to edit skuppersamples.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: skuppersample-editor-role
+rules:
+- apiGroups:
+  - skuppersample.example.com
+  resources:
+  - skuppersamples
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - skuppersample.example.com
+  resources:
+  - skuppersamples/status
+  verbs:
+  - get

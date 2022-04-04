@@ -1,0 +1,43 @@
+{{- if .Values.frontend.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    {{- with .Values.frontend.skupper }}
+    {{- if .expose }}
+    {{- include "skuppersample.skupperExpose" . | nindent 4}}
+    {{- end }}
+    {{- end }}
+  name: {{ include "skuppersample.fullname" . }}-hello-world-frontend
+  labels:
+    {{- include "skuppersample.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.frontend.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "skuppersample.selectorLabels" . | nindent 6 }}
+      component: hello-world-frontend
+  template:
+    metadata:
+      {{- with .Values.frontend.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "skuppersample.selectorLabels" . | nindent 8 }}
+        component: hello-world-frontend
+    spec:
+      containers:
+      - name: hello-world-frontend
+        resources:
+          {{- toYaml .Values.frontend.resources | nindent 12 }}
+        securityContext:
+          {{- toYaml .Values.frontend.securityContext | nindent 12 }}
+        image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+        imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
+        env:
+        - name: BACKEND_SERVICE_HOST
+          value: {{ .Values.frontend.backendServiceHost }}
+        - name: BACKEND_SERVICE_PORT
+          value: {{ .Values.frontend.backendServicePort | quote }}
+{{- end }}

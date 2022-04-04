@@ -1,0 +1,12 @@
+{{- if .Values.skupperSite.enabled }}
+apiVersion: v1
+data:
+  {{- range $k, $v := .Values.skupperSite.config }}
+  {{ $k }}: {{ $v | quote }}
+  {{- end }}
+kind: ConfigMap
+metadata:
+  name: skupper-site
+  labels:
+    {{- include "skuppersample.labels" . | nindent 4 }}
+{{- end }}

@@ -1,0 +1,20 @@
+apiVersion: skuppersample.example.com/v1alpha1
+kind: SkupperSample
+metadata:
+  name: skuppersample-sample
+spec:
+  fullnameOverride: ""
+  nameOverride: "west"
+  skupperSiteController:
+    enabled: true
+  skupperSite:
+    enabled: true
+    config:
+      ingress: nodeport
+      ingress-host: "159.122.181.91"
+  frontend:
+    enabled: true
+    backendServiceHost: skuppersample-sample-east-hello-world-backend
+    # backendServiceHost: hello-world-backend
+  backend:
+    enabled: false
