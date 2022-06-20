@@ -1,0 +1,12 @@
+apiVersion: example.example.com/v1alpha1
+kind: Test
+metadata:
+  name: test-sample
+spec:
+  myString: abc
+  myBool: false
+  myInt: 10
+  myObject:
+    foo: bar
+    bar: baz
+  # other: foobar

@@ -32,7 +32,7 @@ spec:
           spec:
             description: Spec defines the desired state of SkupperSample
             type: object
-            x-kubernetes-preserve-unknown-fields: true
+            x-kubernetes-preserve-unknown-fields: false
           status:
             description: Status defines the observed state of SkupperSample
             type: object
